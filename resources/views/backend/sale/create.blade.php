@@ -97,8 +97,8 @@
                                                         <th>{{trans('file.name')}}</th>
                                                         <th>{{trans('file.Code')}}</th>
                                                         <th>{{trans('file.Quantity')}}</th>
-                                                        <th>{{trans('file.Batch No')}}</th>
-                                                        <th>{{trans('file.Expired Date')}}</th>
+                                                        <!-- <th>{{trans('file.Batch No')}}</th>
+                                                        <th>{{trans('file.Expired Date')}}</th> -->
                                                         <th>{{trans('Unit Type')}}</th>
                                                         <th>{{trans('file.Unit Price')}}</th>
                                                         <th>{{trans('file.Discount')}}</th>
@@ -114,8 +114,8 @@
                                                     <th colspan="2">{{trans('file.Total')}}</th>
                                                     <th id="total-qty">0</th>
                                                     <th></th>
-                                                    <th></th>
-                                                    <th></th>
+                                                    <!-- <th></th>
+                                                    <th></th> -->
                                                     <th id="total-discount">0.00</th>
                                                     <th id="total-tax">0.00</th>
                                                     <th id="total">0.00</th>
