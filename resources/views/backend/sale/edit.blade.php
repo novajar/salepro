@@ -81,8 +81,8 @@
                                                         <th>{{trans('file.name')}}</th>
                                                         <th>{{trans('file.Code')}}</th>
                                                         <th>{{trans('file.Quantity')}}</th>
-                                                        <th>{{trans('file.Batch No')}}</th>
-                                                        <th>{{trans('file.Expired Date')}}</th>
+                                                        <!-- <th>{{trans('file.Batch No')}}</th>
+                                                        <th>{{trans('file.Expired Date')}}</th> -->
                                                         <th>{{trans('file.Net Unit Price')}}</th>
                                                         <th>{{trans('file.Discount')}}</th>
                                                         <th>{{trans('file.Tax')}}</th>
@@ -157,17 +157,17 @@
                                                         <td>{{$product_data->code}}</td>
                                                         <td><input type="number" class="form-control qty" name="qty[]" value="{{$product_sale->qty}}" step="any" required/></td>
                                                         @if($product_batch_data)
-                                                        <td>
+                                                        <!-- <td>
                                                             <input type="hidden" class="product-batch-id" name="product_batch_id[]" value="{{$product_sale->product_batch_id}}">
                                                             <input type="text" class="form-control batch-no" name="batch_no[]" value="{{$product_batch_data->batch_no}}" required/>
                                                         </td>
-                                                        <td>{{date($general_setting->date_format, strtotime($product_batch_data->expired_date))}}</td>
+                                                        <td>{{date($general_setting->date_format, strtotime($product_batch_data->expired_date))}}</td> -->
                                                         @else
-                                                        <td>
+                                                        <!-- <td>
                                                             <input type="hidden" class="product-batch-id" name="product_batch_id[]" value="">
                                                             <input type="text" class="form-control batch-no" name="batch_no[]" value="" disabled />
                                                         </td>
-                                                        <td>N/A</td>
+                                                        <td>N/A</td> -->
                                                         @endif
                                                         <td class="net_unit_price">{{ number_format((float)$product_sale->net_unit_price, 2, '.', '') }} </td>
                                                         <td class="discount">{{ number_format((float)$product_sale->discount, 2, '.', '') }}</td>
