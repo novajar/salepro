@@ -114,8 +114,8 @@
                                                     <th colspan="2">{{trans('file.Total')}}</th>
                                                     <th id="total-qty">0</th>
                                                     <th></th>
-                                                    <!-- <th></th>
-                                                    <th></th> -->
+                                                    <th></th>
+                                                    <th>Discount:</th>
                                                     <th id="total-discount">0.00</th>
                                                     <th id="total-tax">0.00</th>
                                                     <th id="total">0.00</th>
@@ -800,6 +800,7 @@ function productSearch(data) {
                 else {
                     cols += '<td><input type="text" class="form-control batch-no" disabled/> <input type="hidden" class="product-batch-id" name="product_batch_id[]"/> </td>';
                     cols += '<td class="expired-date">N/A</td>';
+                    cols+= '<input type="hidden" class="product-batch-id" name="product_batch_id[]"/>';
                 }
                 cols += '<td class="unit_type">'+temp_unit_name[0]+'</td>';
                 cols += '<td class="unit_price"></td>';

@@ -39,26 +39,28 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-4 ngumpet">
                                         <div class="form-group">
-                                            <label>{{trans('file.Warehouse')}} *</label>
+                                            <!-- <label>{{trans('file.Warehouse')}} *</label> -->
                                             <input type="hidden" name="warehouse_id_hidden" value="{{$lims_sale_data->warehouse_id}}" />
-                                            <select required id="warehouse_id" name="warehouse_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select warehouse...">
+                                            <!-- <select required id="warehouse_id" name="warehouse_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select warehouse...">
                                                 @foreach($lims_warehouse_list as $warehouse)
                                                 <option value="{{$warehouse->id}}">{{$warehouse->name}}</option>
                                                 @endforeach
-                                            </select>
+                                            </select> -->
+                                            <input type="hidden" name="warehouse_id" value="1" />
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>{{trans('file.Biller')}} *</label>
+                                            <!-- <label>{{trans('file.Biller')}} *</label> -->
                                             <input type="hidden" name="biller_id_hidden" value="{{$lims_sale_data->biller_id}}" />
-                                            <select required name="biller_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select Biller...">
+                                            <!-- <select required name="biller_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select Biller...">
                                                 @foreach($lims_biller_list as $biller)
                                                 <option value="{{$biller->id}}">{{$biller->name . ' (' . $biller->company_name . ')'}}</option>
                                                 @endforeach
-                                            </select>
+                                            </select> -->
+                                            <input type="hidden" name="biller_id" value="1" />
                                         </div>
                                     </div>
                                 </div>
@@ -200,8 +202,8 @@
                                                     <th colspan="2">{{trans('file.Total')}}</th>
                                                     <th id="total-qty">{{$lims_sale_data->total_qty}}</th>
                                                     <th></th>
-                                                    <th></th>
-                                                    <th></th>
+                                                    <!-- <th></th>
+                                                    <th></th> -->
                                                     <th id="total-discount">{{ number_format((float)$lims_sale_data->total_discount, 2, '.', '') }}</th>
                                                     <th id="total-tax">{{ number_format((float)$lims_sale_data->total_tax, 2, '.', '')}}</th>
                                                     <th id="total">{{ number_format((float)$lims_sale_data->total_price, 2, '.', '') }}</th>
@@ -823,12 +825,12 @@
                     cols += '<td>' + data[1] + '</td>';
                     cols += '<td><input type="number" class="form-control qty" name="qty[]" value="'+data[14]+'" step="any" required/></td>';
                     if(data[12]) {
-                        cols += '<td><input type="text" class="form-control batch-no" value="'+batch_no[pos]+'" required/> <input type="hidden" class="product-batch-id" name="product_batch_id[]" value="'+product_batch_id[pos]+'"/> </td>';
-                        cols += '<td class="expired-date">'+expired_date[pos]+'</td>';
+                        // cols += '<td><input type="text" class="form-control batch-no" value="'+batch_no[pos]+'" required/> <input type="hidden" class="product-batch-id" name="product_batch_id[]" value="'+product_batch_id[pos]+'"/> </td>';
+                        // cols += '<td class="expired-date">'+expired_date[pos]+'</td>';
                     }
                     else {
-                        cols += '<td><input type="text" class="form-control batch-no" disabled/> <input type="hidden" class="product-batch-id" name="product_batch_id[]"/> </td>';
-                        cols += '<td class="expired-date">N/A</td>';
+                        // cols += '<td><input type="text" class="form-control batch-no" disabled/> <input type="hidden" class="product-batch-id" name="product_batch_id[]"/> </td>';
+                        // cols += '<td class="expired-date">N/A</td>';
                     }
 
                     cols += '<td class="net_unit_price"></td>';

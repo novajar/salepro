@@ -7,25 +7,15 @@
 @endif
 <style type="text/css">
     .flex-container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        /* align-items:flex-end; */
-        width:100%;
-    }
-    .flex-container > div {
-        background-color: #fff;
-        /* width: 30%; */
-    }
-    .faktur{
-        width:19%;
-        text-align:center;
-        vertical-align:bottom;
-        align-self: flex-end;
-    }
-    .detail{
-        width: 30%;
-    }
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            /* align-items:flex-end; */
+        }
+        .flex-container > div {
+            background-color: #fff;
+           /* width: 30%; */
+        }
 </style>
 <section>
     <div class="table-responsive">
@@ -89,7 +79,6 @@
                               <span class="sr-only">Toggle Dropdown</span>
                             </button>
                             <ul class="dropdown-menu edit-options dropdown-menu-right dropdown-default" user="menu">
-                                <li><a href="{{route('delivery.print',$delivery->id)}}" class="btn btn-link" target="blank"><i class="fa fa-copy"></i> Print</a></li>
                                 <li>
                                     <button type="button" data-id="{{$delivery->id}}" class="open-EditCategoryDialog btn btn-link"><i class="dripicons-document-edit"></i> {{trans('file.edit')}}</button>
                                 </li>
@@ -126,18 +115,18 @@
                 <div class="col-md-6">
                     <button type="button" id="close-btn" data-dismiss="modal" aria-label="Close" class="close d-print-none"><span aria-hidden="true"><i class="dripicons-cross"></i></span></button>
                 </div>
-                <!-- <div class="col-md-12">
+                <div class="col-md-12">
                     <h3 id="exampleModalLabel" class="modal-title text-center container-fluid">
-                        {{$general_setting->site_title}}
+                        <!-- {{$general_setting->site_title}} -->
                         SURAT JALAN
                     </h3>
                 </div>
                 <div class="col-md-12 text-center">
                     <i style="font-size: 15px;">
-                    {{trans('file.Delivery Details')}}
+                    <!-- {{trans('file.Delivery Details')}} -->
                     <p class="dr"></p>
                 </i>
-                </div> -->
+                </div>
             </div>
         <div class="row">
             <div class="flex-container">

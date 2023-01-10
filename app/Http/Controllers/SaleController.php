@@ -1996,6 +1996,7 @@ class SaleController extends Controller
         foreach ($lims_product_sale_data as $product_sale) {
             $lims_sale_unit_data = Unit::find($product_sale->sale_unit_id);
         }
+        $lims_account_data = Account::where('id',1)->first();
         foreach ($lims_payment_data as $payment){
             $lims_account_data = Account::find($payment->account_id);
         }

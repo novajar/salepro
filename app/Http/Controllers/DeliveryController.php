@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Customer;
 use App\Sale;
+use App\Account;
 use App\Product_Sale;
 use App\Product;
 use App\ProductVariant;
 use App\ProductBatch;
+use App\Warehouse;
 use App\Delivery;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -27,10 +29,28 @@ class DeliveryController extends Controller
                 $lims_delivery_all = Delivery::orderBy('id', 'desc')->where('user_id', Auth::id())->get();
             else
                 $lims_delivery_all = Delivery::orderBy('id', 'desc')->get();
-            return view('backend.delivery.index', compact('lims_delivery_all'));
+                $lims_account_data = Account::where('id',1)->first();
+            return view('backend.delivery.index', compact('lims_delivery_all','lims_account_data'));
         }
         else
             return redirect()->back()->with('not_permitted', 'Sorry! You are not allowed to access this module');
+    }
+    public function print($id){
+        if(Auth::user()->role_id > 2 && config('staff_access') == 'own')
+            $lims_delivery_all = Delivery::orderBy('id', 'desc')->where('user_id', Auth::id())->get();
+        else
+            $lims_delivery_all = Delivery::orderBy('id', 'desc')->get();
+            
+        $lims_account_data = Account::where('id',1)->first();
+        $lims_delivery_data = Delivery::find($id);
+        $lims_sale_data = Sale::find($lims_delivery_data->sale->id);
+        $lims_warehouse_data = Warehouse::find($lims_sale_data->warehouse_id);
+        $lims_customer_data = Customer::find($lims_sale_data->customer_id);
+        $sales_id = $lims_sale_data->id;
+        $lims_product_sale_data = Product_Sale::where('sale_id', $sales_id)->get();
+        $lims_sale_data_test = $lims_sale_data->id;
+        
+        return view('backend.delivery.print', compact('lims_delivery_all','lims_account_data','lims_delivery_data','lims_sale_data','lims_product_sale_data','lims_customer_data','lims_warehouse_data','lims_sale_data_test'));
     }
     public function create($id){
         $lims_delivery_data = Delivery::where('sale_id', $id)->first();

@@ -144,6 +144,7 @@ Route::group(['middleware' => ['common', 'auth', 'active']], function() {
 	Route::post('delivery/update', 'DeliveryController@update')->name('delivery.update');
 	Route::post('delivery/deletebyselection', 'DeliveryController@deleteBySelection');
 	Route::post('delivery/delete/{id}', 'DeliveryController@delete')->name('delivery.delete');
+	Route::get('delivery/print/{id}', 'DeliveryController@print')->name('delivery.print');
 
 	Route::post('quotations/quotation-data', 'QuotationController@quotationData')->name('quotations.data');
 	Route::get('quotations/product_quotation/{id}','QuotationController@productQuotationData');
