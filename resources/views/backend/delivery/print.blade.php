@@ -195,23 +195,6 @@
             <!-- </tfoot> -->
         </table>
         <table>
-            <?php if(!empty($lims_delivery_data->reference_no)){?>
-            <tr>
-                <td><strong>Untuk</strong>
-                <br>No. Surat Jalan:
-                <!-- <br>{{$lims_delivery_data->reference_no}} <span style="margin-left: 20pt;">{{date('d F Y', strtotime($lims_delivery_data->created_at->toDateString()))}}</span> -->
-                </td>  
-                <td>
-            </tr>
-            <?php }else{?>
-                <tr>
-                <td><strong>Untuk</strong>
-                <br>No. Surat Jalan:
-                <!-- <br>{{$lims_sale_data->reference_no}} <span style="margin-left: 20pt;">{{date('d F Y', strtotime($lims_sale_data->created_at->toDateString()))}}</span> -->
-                </td>  
-                <td>
-            </tr>
-            <?php }?>
             <tr>
                 <td>Catatan:
                     <br>Pembayaran Via Transfer ke {{$lims_account_data->note}}

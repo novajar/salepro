@@ -116,12 +116,13 @@
         <div class="container mt-3 pb-2 border-bottom">
             <div class="row">
                 <div class="col-md-6 d-print-none">
-                    <button id="print-btn" type="button" class="btn btn-default btn-sm d-print-none"><i class="dripicons-print"></i> {{trans('file.Print')}}</button>
+                    <!-- <button id="print-btn" type="button" class="btn btn-default btn-sm d-print-none"><i class="dripicons-print"></i> {{trans('file.Print')}}</button>
 
                     {{ Form::open(['route' => 'delivery.sendMail', 'method' => 'post', 'class' => 'sendmail-form'] ) }}
                         <input type="hidden" name="delivery_id">
                         <button class="btn btn-default btn-sm d-print-none"><i class="dripicons-mail"></i> {{trans('file.Email')}}</button>
-                    {{ Form::close() }}
+                    {{ Form::close() }} -->
+                    &nbsp;
                 </div>
                 <div class="col-md-6">
                     <button type="button" id="close-btn" data-dismiss="modal" aria-label="Close" class="close d-print-none"><span aria-hidden="true"><i class="dripicons-cross"></i></span></button>
@@ -139,28 +140,28 @@
                 </i>
                 </div> -->
             </div>
-        <div class="row">
-            <div class="flex-container">
-                <div class="detail">
-                    <strong>{{$general_setting->company}}</strong><br>
-                    <?php echo nl2br($general_setting->address);?>
-                        <br>Telp: {{$general_setting->phone}}, Fax: {{$general_setting->fax}}
-                        <br>NPWP: {{$general_setting->npwp}}
-                        <br>Rek. {{$lims_account_data->account_no}}
-                        <br>{{$lims_account_data->note}}
-                    
+            <!-- <div class="row">
+                <div class="flex-container">
+                    <div class="detail">
+                        <strong>{{$general_setting->company}}</strong><br>
+                        <?php echo nl2br($general_setting->address);?>
+                            <br>Telp: {{$general_setting->phone}}, Fax: {{$general_setting->fax}}
+                            <br>NPWP: {{$general_setting->npwp}}
+                            <br>Rek. {{$lims_account_data->account_no}}
+                            <br>{{$lims_account_data->note}}
+                        
+                    </div>
+                    <div class="faktur">
+                    <label><strong>Surat Jalan</strong> </label><br/>
+                        <label><p class="dr"></p></label>
+                        
+                    </div>
+                    <div class="detail">
+                        <label>Kepada YTH.</label><br>
+                        
+                    </div>
                 </div>
-                <div class="faktur">
-                <label><strong>Surat Jalan</strong> </label><br/>
-                    <label><p class="dr"></p></label>
-                    
-                </div>
-                <div class="detail">
-                    <label>Kepada YTH.</label><br>
-                    
-                </div>
-            </div>
-        </div>
+            </div> -->
         </div>
         <div class="modal-body">
             <table class="table table-bordered" id="delivery-content">

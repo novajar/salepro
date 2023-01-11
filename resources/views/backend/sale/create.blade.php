@@ -794,13 +794,13 @@ function productSearch(data) {
                 cols += '<td>' + data[1] + '</td>';
                 cols += '<td><input type="number" class="form-control qty" name="qty[]" value="'+data[15]+'" step="any" required/></td>';
                 if(data[12]) {
-                    cols += '<td><input type="text" class="form-control batch-no" value="'+batch_no[pos]+'" required/> <input type="hidden" class="product-batch-id" name="product_batch_id[]" value="'+product_batch_id[pos]+'"/> </td>';
-                    cols += '<td class="expired-date">'+expired_date[pos]+'</td>';
+                    cols += '<input type="hidden" class="form-control batch-no" value="'+batch_no[pos]+'" required/> <input type="hidden" class="product-batch-id" name="product_batch_id[]" value="'+product_batch_id[pos]+'"/> ';
+                    // cols += '<td class="expired-date">'+expired_date[pos]+'</td>';
                 }
                 else {
-                    cols += '<td><input type="text" class="form-control batch-no" disabled/> <input type="hidden" class="product-batch-id" name="product_batch_id[]"/> </td>';
-                    cols += '<td class="expired-date">N/A</td>';
-                    cols+= '<input type="hidden" class="product-batch-id" name="product_batch_id[]"/>';
+                    cols += '<input type="hidden" class="form-control batch-no" disabled/> <input type="hidden" class="product-batch-id" name="product_batch_id[]"/> ';
+                    // cols += '<td class="expired-date">N/A</td>';
+                    // cols+= '<input type="hidden" class="product-batch-id" name="product_batch_id[]"/>';
                 }
                 cols += '<td class="unit_type">'+temp_unit_name[0]+'</td>';
                 cols += '<td class="unit_price"></td>';
