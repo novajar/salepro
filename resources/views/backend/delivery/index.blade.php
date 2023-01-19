@@ -173,8 +173,8 @@
                     <th>No</th>
                     <th>Code</th>
                     <th>Description</th>
-                    <th>{{trans('file.Batch No')}}</th>
-                    <th>{{trans('file.Expired Date')}}</th>
+                    <!-- <th>{{trans('file.Batch No')}}</th>
+                    <th>{{trans('file.Expired Date')}}</th> -->
                     <th>Qty</th>
                 </thead>
                 <tbody>
@@ -322,8 +322,8 @@
                 cols += '<td><strong>' + (index+1) + '</strong></td>';
                 cols += '<td>' + code[index] + '</td>';
                 cols += '<td>' + description[index] + '</td>';
-                cols += '<td>' + batch_no[index] + '</td>';
-                cols += '<td>' + expired_date[index] + '</td>';
+                // cols += '<td>' + batch_no[index] + '</td>';
+                // cols += '<td>' + expired_date[index] + '</td>';
                 cols += '<td>' + qty[index] + '</td>';
                 newRow.append(cols);
                 newBody.append(newRow);

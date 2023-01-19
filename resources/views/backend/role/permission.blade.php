@@ -710,6 +710,57 @@
 						            </td>
 						        </tr>
 						        <tr>
+						            <td>Customer Price</td>
+						            <td class="text-center">
+						                <div class="icheckbox_square-blue checked" aria-checked="false" aria-disabled="false">
+							                <div class="checkbox">
+								                @if(in_array("customers-price-index", $all_permission))
+								                <input type="checkbox" value="1" id="customers-price-index" name="customers-price-index" checked>
+								                @else
+								                <input type="checkbox" value="1" id="customers-price-index" name="customers-price-index">
+								                @endif
+								                <label for="customers-price-index"></label>
+								            </div>
+						            	</div>
+						            </td>
+						            <td class="text-center">
+						                <div class="icheckbox_square-blue checked" aria-checked="false" aria-disabled="false">
+							                <div class="checkbox">
+								                @if(in_array("customers-price-add", $all_permission))
+								                <input type="checkbox" value="1" id="customers-price-add" name="customers-price-add" checked>
+								                @else
+								                <input type="checkbox" value="1" id="customers-price-add" name="customers-price-add">
+								                @endif
+								                <label for="customers-price-add"></label>
+								            </div>
+						            	</div>
+						            </td>
+						            <td class="text-center">
+						                <div class="icheckbox_square-blue checked" aria-checked="false" aria-disabled="false">
+							                <div class="checkbox">
+								                @if(in_array("customers-price-edit", $all_permission))
+								                <input type="checkbox" value="1" id="customers-price-edit" name="customers-price-edit" checked>
+								                @else
+								                <input type="checkbox" value="1" id="customers-price-edit" name="customers-price-edit">
+								                @endif
+								                <label for="customers-price-edit"></label>
+								            </div>
+						            	</div>
+						            </td>
+						            <td class="text-center">
+						                <div class="icheckbox_square-blue" aria-checked="false" aria-disabled="false">
+							                <div class="checkbox">
+								                @if(in_array("customers-price-delete", $all_permission))
+								                <input type="checkbox" value="1" id="customers-price-delete" name="customers-price-delete" checked>
+								                @else
+								                <input type="checkbox" value="1" id="customers-price-delete" name="customers-price-delete">
+								                @endif
+								                <label for="customers-price-delete"></label>
+								            </div>
+						            	</div>
+						            </td>
+						        </tr>
+						        <tr>
 						            <td>{{trans('file.Biller')}}</td>
 						            <td class="text-center">
 						                <div class="icheckbox_square-blue checked" aria-checked="false" aria-disabled="false">

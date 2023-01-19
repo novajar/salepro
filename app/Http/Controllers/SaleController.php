@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Customer;
+use App\CustomerPrice;
 use App\CustomerGroup;
 use App\Warehouse;
 use App\Biller;
@@ -1256,13 +1257,33 @@ class SaleController extends Controller
                     ['product_variants.item_code', $product_code[0]],
                     ['products.is_active', true]
                 ])->first();
-            $product_variant_id = $lims_product_data->product_variant_id;
+            $product_variant_id = $lims_product_data->product_variant_id; 
+        }
+        // $lims_customer_price_data = CustomerPrice::where(
+        //     ['customer_id',$customer_id],
+        //     ['status_approve',1]
+        // )
+        // ->limit(1)
+        // ->orderBy('approve_at', 'desc')->get();
+        
+        $harga = $lims_product_data->price;
+        $lims_customer_price_data = CustomerPrice::select('customer_prices.*')
+        ->where('status_approve',1)
+        ->where('product_id',$lims_product_data->id)
+        ->where('customer_id',$customer_id)
+        ->get();
+        
+        if($lims_customer_price_data){
+            foreach ($lims_customer_price_data as $key => $price) {
+                $harga = $price->harga;
+            }
         }
 
         $product[] = $lims_product_data->name;
         if($lims_product_data->is_variant){
             $product[] = $lims_product_data->item_code;
-            $lims_product_data->price += $lims_product_data->additional_price;
+            // $lims_product_data->price += $lims_product_data->additional_price;
+            $harga = $lims_product_data->price+$lims_product_data->additional_price;
         }
         else
             $product[] = $lims_product_data->code;
@@ -1274,10 +1295,12 @@ class SaleController extends Controller
 
             if( ( $discount->applicable_for == 'All' || in_array($lims_product_data->id, $product_list) ) && ( $todayDate >= $discount->valid_from && $todayDate <= $discount->valid_till && in_array(date('D'), $days) && $qty >= $discount->minimum_qty && $qty <= $discount->maximum_qty ) ) {
                 if($discount->type == 'flat') {
-                    $product[] = $lims_product_data->price - $discount->value;
+                    // $product[] = $lims_product_data->price - $discount->value;
+                    $product[] = $harga - $discount->value;
                 }
                 elseif($discount->type == 'percentage') {
-                    $product[] = $lims_product_data->price - ($lims_product_data->price * ($discount->value/100));
+                    // $product[] = $lims_product_data->price - ($lims_product_data->price * ($discount->value/100));
+                    $product[] = $harga - ($harga * ($discount->value/100));
                 }
                 $no_discount = 0;
                 break;
@@ -1291,7 +1314,8 @@ class SaleController extends Controller
             $product[] = $lims_product_data->promotion_price;
         }
         elseif($no_discount)
-            $product[] = $lims_product_data->price;
+            // $product[] = $lims_product_data->price;
+            $product[] = $harga;
         
         if($lims_product_data->tax_id) {
             $lims_tax_data = Tax::find($lims_product_data->tax_id);
@@ -1338,6 +1362,7 @@ class SaleController extends Controller
         $product[] = $lims_product_data->is_imei;
         $product[] = $lims_product_data->is_variant;
         $product[] = $qty;
+        $product[] = $harga;
         return $product;
 
     }
@@ -1365,16 +1390,33 @@ class SaleController extends Controller
                         ->select('discounts.*')
                         ->get();
         $no_discount = 1;
+
+        //customer price
+        $harga = $lims_product_data->price;
+        $lims_customer_price_data = CustomerPrice::select('customer_prices.*')
+        ->where('status_approve',1)
+        ->where('product_id',$lims_product_data->id)
+        ->where('customer_id',$customer_id)
+        ->get();
+        
+        if($lims_customer_price_data){
+            foreach ($lims_customer_price_data as $key => $price) {
+                $harga = $price->harga;
+            }
+        }
+
         foreach ($all_discount as $key => $discount) {
             $product_list = explode(",", $discount->product_list);
             $days = explode(",", $discount->days);
 
             if( ( $discount->applicable_for == 'All' || in_array($lims_product_data->id, $product_list) ) && ( $todayDate >= $discount->valid_from && $todayDate <= $discount->valid_till && in_array(date('D'), $days) && $qty >= $discount->minimum_qty && $qty <= $discount->maximum_qty ) ) {
                 if($discount->type == 'flat') {
-                    $price = $lims_product_data->price - $discount->value;
+                    // $price = $lims_product_data->price - $discount->value;
+                    $price = $harga - $discount->value;
                 }
                 elseif($discount->type == 'percentage') {
-                    $price = $lims_product_data->price - ($lims_product_data->price * ($discount->value/100));
+                    // $price = $lims_product_data->price - ($lims_product_data->price * ($discount->value/100));
+                    $price = $harga - ($harga * ($discount->value/100));
                 }
                 $no_discount = 0;
                 break;
@@ -1388,7 +1430,8 @@ class SaleController extends Controller
             $price = $lims_product_data->promotion_price;
         }
         elseif($no_discount)
-            $price = $lims_product_data->price;
+            // $price = $lims_product_data->price;
+            $price = $harga;
         
         $data = [$price, $lims_product_data->promotion];
         return $data;
@@ -1684,7 +1727,7 @@ class SaleController extends Controller
         $data['created_at'] = date("Y-m-d", strtotime(str_replace("/", "-", $data['created_at'])));
         $product_id = $data['product_id'];
         $imei_number = $data['imei_number'];
-        $product_batch_id = $data['product_batch_id'];
+        // $product_batch_id = $data['product_batch_id'];
         $product_code = $data['product_code'];
         $product_variant_id = $data['product_variant_id'];
         $qty = $data['qty'];
@@ -1853,17 +1896,17 @@ class SaleController extends Controller
                         $lims_product_variant_data->qty -= $new_product_qty;
                         $lims_product_variant_data->save();
                     }
-                    elseif($product_batch_id[$key]) {
-                        $lims_product_warehouse_data = Product_Warehouse::where([
-                            ['product_id', $pro_id],
-                            ['product_batch_id', $product_batch_id[$key] ],
-                            ['warehouse_id', $data['warehouse_id'] ]
-                        ])->first();
+                    // elseif($product_batch_id[$key]) {
+                    //     $lims_product_warehouse_data = Product_Warehouse::where([
+                    //         ['product_id', $pro_id],
+                    //         ['product_batch_id', $product_batch_id[$key] ],
+                    //         ['warehouse_id', $data['warehouse_id'] ]
+                    //     ])->first();
 
-                        $product_batch_data = ProductBatch::find($product_batch_id[$key]);
-                        $product_batch_data->qty -= $new_product_qty;
-                        $product_batch_data->save();
-                    }
+                    //     $product_batch_data = ProductBatch::find($product_batch_id[$key]);
+                    //     $product_batch_data->qty -= $new_product_qty;
+                    //     $product_batch_data->save();
+                    // }
                     else {
                         $lims_product_warehouse_data = Product_Warehouse::FindProductWithoutVariant($pro_id, $data['warehouse_id'])
                         ->first();
@@ -1910,7 +1953,7 @@ class SaleController extends Controller
             $product_sale['sale_id'] = $id ;
             $product_sale['product_id'] = $pro_id;
             $product_sale['imei_number'] = $imei_number[$key];
-            $product_sale['product_batch_id'] = $product_batch_id[$key];
+            // $product_sale['product_batch_id'] = $product_batch_id[$key];
             $product_sale['qty'] = $mail_data['qty'][$key] = $qty[$key];
             $product_sale['sale_unit_id'] = $sale_unit_id;
             $product_sale['net_unit_price'] = $net_unit_price[$key];

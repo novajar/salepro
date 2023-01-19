@@ -101,6 +101,12 @@ Route::group(['middleware' => ['common', 'auth', 'active']], function() {
 	Route::get('customer/lims_customer_search', 'CustomerController@limsCustomerSearch')->name('customer.search');
 	Route::post('customers/clear-due', 'CustomerController@clearDue')->name('customer.clearDue');
 	Route::resource('customer', 'CustomerController');
+	
+	Route::post('customer_price/add_client_price', 'CustomerPriceController@addClientPrice');
+	Route::get('customer_price/approval', 'CustomerPriceController@approvalPrice')->name('customer_price.approval');
+	Route::get('customer_price/{id}/edit', 'CustomerPriceController@edit');
+	Route::get('customer_price/approve/{id}/{tipe}', 'CustomerPriceController@approve');
+	Route::resource('customer_price', 'CustomerPriceController');
 
 	Route::post('importbiller', 'BillerController@importBiller')->name('biller.import');
 	Route::post('biller/deletebyselection', 'BillerController@deleteBySelection');

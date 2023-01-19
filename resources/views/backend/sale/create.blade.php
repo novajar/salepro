@@ -38,7 +38,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>{{trans('file.customer')}} *</label>
-                                            <select required name="customer_id" id="customer_id" class="selectpicker form-control" data-live-search="true" title="Select customer...">
+                                            <select required name="customer_id" id="customer_id" onchange="clearTable()" class="selectpicker form-control" data-live-search="true" title="Select customer...">
                                                 <?php
                                                     $deposit = [];
                                                     $points = [];
@@ -225,7 +225,22 @@
                                                 <option value="2">{{trans('file.Due')}}</option>
                                                 <option value="3">{{trans('file.Partial')}}</option>
                                                 <option value="4">{{trans('file.Paid')}}</option>
+                                                <option value="5">Termin</option>
                                             </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="tenor">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Termin</label>
+                                                <select name="tenor" class="form-control">
+                                                    <option value="3">3 Months</option>
+                                                    <option value="6">6 Months</option>
+                                                    <option value="12">12 Months</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -450,6 +465,7 @@
     var currency = <?php echo json_encode($currency) ?>;
 
 $("#payment").hide();
+$("#tenor").hide();
 $(".card-element").hide();
 $("#gift-card").hide();
 $("#cheque").hide();
@@ -692,9 +708,16 @@ $("#myTable").on("change", ".batch-no", function () {
         }
     });
 });
+function clearTable(){
+    $("table.order-list tbody").empty();
+    
+    $("#total-qty").text('0');
+    $("#total-discount").text('0');
+    $("#total-tax").text('0');
+    $("#total").text('0');
+}
 function gudang(){
     var id =  $('#warehouse_id').val();
-    // alert(id);
     $.get('getproduct/' + id, function(data) {
         lims_product_array = [];
         product_code = data[0];
@@ -728,8 +751,8 @@ function tester(){
     } else {
         row_product_price_rt = product_price[rowindex] / temp_unit_operation_value[position];
     }
+    
     $('input[name="edit_unit_price"]').val(row_product_price_rt.toFixed(2));
-    // alert(product_price[rowindex]+row_unit_operator+row_unit_operation_value+'  '+ temp_unit_operation_value[position]);
 }
 function isCashRegisterAvailable(warehouse_id) {
     $.ajax({
@@ -818,6 +841,7 @@ function productSearch(data) {
                 cols += '<input type="hidden" class="tax-value" name="tax[]" />';
                 cols += '<input type="hidden" class="subtotal-value" name="subtotal[]" />';
                 cols += '<input type="hidden" class="imei-number" name="imei_number[]" />';
+                cols += '<input type="hidden" class="imei-number" name="imei_number[]" />';
 
                 newRow.append(cols);
                 $("table.order-list tbody").prepend(newRow);
@@ -889,6 +913,7 @@ function edit()
         row_product_price = product_price[rowindex];
         $("#edit_unit").hide();
     }
+    
     $('input[name="edit_unit_price"]').val(row_product_price.toFixed(2));
     $('.selectpicker').selectpicker('refresh');
 }
@@ -904,6 +929,7 @@ function checkDiscount(qty, flag) {
             success: function(data) {
                 pos = product_code.indexOf($('table.order-list tbody tr:nth-child(' + (rowindex + 1) + ') .product-code').val());
                 product_price[rowindex] = parseFloat(data[0] * currency['exchange_rate']) + parseFloat(data[0] * currency['exchange_rate'] * customer_group_rate);
+                
             }
         });
     }
@@ -923,7 +949,7 @@ function checkQuantity(sale_qty, flag) {
         else if(operator[0] == '/')
             total_qty = sale_qty / operation_value[0];
         if (total_qty > parseFloat(product_qty[pos])) {
-            alert('Quantity exceeds stock quantity!');
+            
             if (flag) {
                 sale_qty = sale_qty.substring(0, sale_qty.length - 1);
                 $('table.order-list tbody tr:nth-child(' + (rowindex + 1) + ')').find('.qty').val(sale_qty);
@@ -940,7 +966,7 @@ function checkQuantity(sale_qty, flag) {
         $(child_id).each(function(index) {
             var position = product_id.indexOf(parseInt(child_id[index]));
             if( parseFloat(sale_qty * child_qty[index]) > product_qty[position] ) {
-                alert('Quantity exceeds stock quantity!');
+                
                 if (flag) {
                     sale_qty = sale_qty.substring(0, sale_qty.length - 1);
                     $('table.order-list tbody tr:nth-child(' + (rowindex + 1) + ')').find('.qty').val(sale_qty);
@@ -1003,12 +1029,12 @@ function calculateRowProductData(quantity) {
 function unitConversion() {
     var row_unit_operator = unit_operator[rowindex].slice(0, unit_operator[rowindex].indexOf(","));
     var row_unit_operation_value = unit_operation_value[rowindex].slice(0, unit_operation_value[rowindex].indexOf(","));
-
     if (row_unit_operator == '*') {
         row_product_price = product_price[rowindex] * row_unit_operation_value;
     } else {
         row_product_price = product_price[rowindex] / row_unit_operation_value;
     }
+    
 }
 
 function calculateTotal() {
@@ -1119,6 +1145,9 @@ $('select[name="payment_status"]').on("change", function() {
             $('input[name="paying_amount"]').val($('input[name="grand_total"]').val());
             $('input[name="paid_amount"]').val($('input[name="grand_total"]').val());
         }
+    }else if(payment_status == 5){
+        $("#payment").hide();
+        $('#tenor').show();
     }
     else{
         $("#paying-amount").prop('required',false);
@@ -1126,6 +1155,7 @@ $('select[name="payment_status"]').on("change", function() {
         $('input[name="paying_amount"]').val('');
         $('input[name="paid_amount"]').val('');
         $("#payment").hide();
+        $('#tenor').hide();
     }
 });
 

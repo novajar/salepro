@@ -309,8 +309,8 @@ function calculateTotal() {
         if ($(this).is(":checked")) {
             var actual_qty = $('table.order-list tbody tr:nth-child(' + (i + 1) + ') .actual-qty').val();
             var qty = $('table.order-list tbody tr:nth-child(' + (i + 1) + ') .qty').val();
-            if(qty > actual_qty) {
-                alert('Quantity can not be bigger than the actual quantity!');
+            if(Number(qty) > Number(actual_qty)) {
+                alert('Quantity can not be bigger than the actual quantity!'+qty+' > '+actual_qty);
                 qty = actual_qty;
                 $('table.order-list tbody tr:nth-child(' + (i + 1) + ') .qty').val(actual_qty);
             }
@@ -381,6 +381,12 @@ $('.sale-return-form').on('submit',function(e){
     var rownumber = $('table.order-list tbody tr:last').index();
     if (rownumber < 0) {
         alert("Please insert product to order table!")
+        e.preventDefault();
+    }
+    let checkbox = document.querySelectorAll('input[type="checkbox"]');
+    var checkedOne = Array.prototype.slice.call(checkbox).some(x => x.checked);
+    if(checkedOne == false){
+        alert("Please choose product to return!")
         e.preventDefault();
     }
 });

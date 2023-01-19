@@ -659,6 +659,42 @@ class RoleController extends Controller
         else
             $role->revokePermissionTo('customers-delete');
 
+        if($request->has('customers-price-index')){
+            $permission = Permission::firstOrCreate(['name' => 'customers-price-index']);
+            if(!$role->hasPermissionTo('customers-price-index')){
+                $role->givePermissionTo($permission);
+            }
+        }
+        else
+            $role->revokePermissionTo('customers-price-index');
+
+        if($request->has('customers-price-add')){
+            $permission = Permission::firstOrCreate(['name' => 'customers-price-add']);
+            if(!$role->hasPermissionTo('customers-price-add')){
+                $role->givePermissionTo($permission);
+            }
+        }
+        else
+            $role->revokePermissionTo('customers-price-add');
+
+        if($request->has('customers-price-edit')){
+            $permission = Permission::firstOrCreate(['name' => 'customers-price-edit']);
+            if(!$role->hasPermissionTo('customers-price-edit')){
+                $role->givePermissionTo($permission);
+            }
+        }
+        else
+            $role->revokePermissionTo('customers-price-edit');
+
+        if($request->has('customers-price-delete')){
+            $permission = Permission::firstOrCreate(['name' => 'customers-price-delete']);
+            if(!$role->hasPermissionTo('customers-price-delete')){
+                $role->givePermissionTo($permission);
+            }
+        }
+        else
+            $role->revokePermissionTo('customers-price-delete');
+
         if($request->has('billers-index')){
             $permission = Permission::firstOrCreate(['name' => 'billers-index']);
             if(!$role->hasPermissionTo('billers-index')){

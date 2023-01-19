@@ -113,12 +113,12 @@
             <div class="container mt-3 pb-2 border-bottom">
                 <div class="row">
                     <div class="col-md-6 d-print-none">
-                        <button id="print-btn" type="button" class="btn btn-default btn-sm"><i class="dripicons-print"></i> {{trans('file.Print')}}</button>
+                        <!-- <button id="print-btn" type="button" class="btn btn-default btn-sm"><i class="dripicons-print"></i> {{trans('file.Print')}}</button> -->
 
-                        {{ Form::open(['route' => 'sale.sendmail', 'method' => 'post', 'class' => 'sendmail-form'] ) }}
+                        <!-- {{ Form::open(['route' => 'sale.sendmail', 'method' => 'post', 'class' => 'sendmail-form'] ) }}
                             <input type="hidden" name="sale_id">
                             <button class="btn btn-default btn-sm d-print-none"><i class="dripicons-mail"></i> {{trans('file.Email')}}</button>
-                        {{ Form::close() }}
+                        {{ Form::close() }} -->
                     </div>
                     <div class="col-md-6 d-print-none">
                         <button type="button" id="close-btn" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true"><i class="dripicons-cross"></i></span></button>
@@ -208,14 +208,7 @@
                             <label>{{trans('file.Paid By')}}</label>
                             <select name="paid_by_id" class="form-control">
                                 <option value="1">Cash</option>
-                                <!-- <option value="2">Gift Card</option> -->
                                 <option value="3">Credit Card</option>
-                                <!-- <option value="4">Cheque</option> -->
-                                <!-- <option value="5">Paypal</option> -->
-                                <!-- <option value="6">Deposit</option> -->
-                                <!-- @if($lims_reward_point_setting_data->is_active)
-                                <option value="7">Points</option>
-                                @endif -->
                             </select>
                         </div>
                     </div>
@@ -246,7 +239,7 @@
                             <input type="text" name="cheque_no" class="form-control">
                         </div>
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label> {{trans('file.Account')}}</label>
                         <select class="form-control selectpicker" name="account_id">
                         @foreach($lims_account_list as $account)
@@ -257,12 +250,12 @@
                             @endif
                         @endforeach
                         </select>
-                    </div>
+                    </div> -->
                     <div class="form-group">
                         <label>{{trans('file.Payment Note')}}</label>
                         <textarea rows="3" class="form-control" name="payment_note"></textarea>
                     </div>
-
+                    <input type="hidden" name="account_id" value="{{$account->id}}">
                     <input type="hidden" name="sale_id">
 
                     <button type="submit" class="btn btn-primary">{{trans('file.submit')}}</button>
@@ -298,14 +291,14 @@
                             <label>{{trans('file.Paid By')}}</label>
                             <select name="edit_paid_by_id" class="form-control selectpicker">
                                 <option value="1">Cash</option>
-                                <option value="2">Gift Card</option>
+                                <!-- <option value="2">Gift Card</option> -->
                                 <option value="3">Credit Card</option>
-                                <option value="4">Cheque</option>
+                                <!-- <option value="4">Cheque</option>
                                 <option value="5">Paypal</option>
                                 <option value="6">Deposit</option>
                                 @if($lims_reward_point_setting_data->is_active)
                                 <option value="7">Points</option>
-                                @endif
+                                @endif -->
                             </select>
                         </div>
                     </div>
@@ -328,14 +321,14 @@
                             <input type="text" name="edit_cheque_no" class="form-control">
                         </div>
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label> {{trans('file.Account')}}</label>
                         <select class="form-control selectpicker" name="account_id">
                         @foreach($lims_account_list as $account)
                             <option value="{{$account->id}}">{{$account->name}} [{{$account->account_no}}]</option>
                         @endforeach
                         </select>
-                    </div>
+                    </div> -->
                     <div class="form-group">
                         <label>{{trans('file.Payment Note')}}</label>
                         <textarea rows="3" class="form-control" name="edit_payment_note"></textarea>
@@ -970,7 +963,9 @@
     function saleDetails(sale){
         $("#sale-details input[name='sale_id']").val(sale[13]);
 
-        var htmltext = '<strong>{{trans("file.Date")}}: </strong>'+sale[0]+'<br><strong>{{trans("file.reference")}}: </strong>'+sale[1]+'<br><strong>{{trans("file.Warehouse")}}: </strong>'+sale[27]+'<br><strong>{{trans("file.Sale Status")}}: </strong>'+sale[2]+'<br><br><div class="row"><div class="col-md-6"><strong>{{trans("file.From")}}:</strong><br>'+sale[3]+'<br>'+sale[4]+'<br>'+sale[5]+'<br>'+sale[6]+'<br>'+sale[7]+'<br>'+sale[8]+'</div><div class="col-md-6"><div class="float-right"><strong>{{trans("file.To")}}:</strong><br>'+sale[9]+'<br>'+sale[10]+'<br>'+sale[11]+'<br>'+sale[12]+'</div></div></div>';
+        var htmltext = '<strong>{{trans("file.Date")}}: </strong>'+sale[0]+'<br><strong>{{trans("file.reference")}}: </strong>'+sale[1]+'<br><strong>{{trans("file.Sale Status")}}: </strong>'+sale[2]+'<br><br><div class="row"><div class="col-md-6"><strong>{{trans("file.From")}}:</strong><br>'+sale[3]+'<br>'+sale[4]+'<br>'+sale[5]+'<br>'+sale[6]+'<br>'+sale[7]+'<br>'+sale[8]+'</div><div class="col-md-6"><div class="float-right"><strong>{{trans("file.To")}}:</strong><br>'+sale[9]+'<br>'+sale[10]+'<br>'+sale[11]+'<br>'+sale[12]+'</div></div></div>';
+        
+        // var htmltext = '<strong>{{trans("file.Date")}}: </strong>'+sale[0]+'<br><strong>{{trans("file.reference")}}: </strong>'+sale[1]+'<br><strong>{{trans("file.Warehouse")}}: </strong>'+sale[27]+'<br><strong>{{trans("file.Sale Status")}}: </strong>'+sale[2]+'<br><br><table class="dari"><tr><td><strong>{{trans("file.From")}}:</strong><br>'+sale[3]+'<br>'+sale[4]+'<br>'+sale[5]+'<br>'+sale[6]+'<br>'+sale[7]+'<br>'+sale[8]+'</td><td><strong>{{trans("file.To")}}:</strong><br>'+sale[9]+'<br>'+sale[10]+'<br>'+sale[11]+'<br>'+sale[12]+'</td></tr></table>';
         $.get('sales/product_sale/' + sale[13], function(data){
             $(".product-sale-list tbody").remove();
             var name_code = data[0];

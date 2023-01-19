@@ -480,7 +480,7 @@
                     ])->first();
             ?>
 
-            @if(Auth::user()->role_id != 5)
+            <!-- @if(Auth::user()->role_id != 5)
             <li class=""><a href="#hrm" aria-expanded="false" data-toggle="collapse"> <i class="dripicons-user-group"></i><span>HRM</span></a>
             <ul id="hrm" class="collapse list-unstyled ">
                 @if($department_active)
@@ -498,7 +498,7 @@
                 <li id="holiday-menu"><a href="{{route('holidays.index')}}">{{trans('file.Holiday')}}</a></li>
             </ul>
             </li>
-            @endif
+            @endif -->
             <?php
                 $user_index_permission_active = DB::table('permissions')
                     ->join('role_has_permissions', 'permissions.id', '=', 'role_has_permissions.permission_id')
@@ -511,6 +511,13 @@
                     ->join('role_has_permissions', 'permissions.id', '=', 'role_has_permissions.permission_id')
                     ->where([
                         ['permissions.name', 'customers-index'],
+                        ['role_id', $role->id] 
+                    ])->first();
+
+                $customer_price_index_permission_active = DB::table('permissions')
+                    ->join('role_has_permissions', 'permissions.id', '=', 'role_has_permissions.permission_id')
+                    ->where([
+                        ['permissions.name', 'customers-price-index'],
                         ['role_id', $role->id] 
                     ])->first();
 
@@ -560,6 +567,11 @@
                 @if($customer_add_permission_active)
                 <li id="customer-create-menu"><a href="{{route('customer.create')}}">{{trans('file.Add Customer')}}</a></li>
                 @endif
+                @endif
+
+                @if($customer_price_index_permission_active)
+                <li id="customer-price-list-menu"><a href="{{route('customer_price.index')}}">Customer Price</a></li>
+               
                 @endif
 
                 @if($biller_index_permission_active)
